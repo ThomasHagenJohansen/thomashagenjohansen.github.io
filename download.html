@@ -1,0 +1,26 @@
+<html>
+<head>
+<script src="./FileSaver.js"></script>
+<script>
+    	function download_file(fileURL, fileName) {
+		alert("download_file");
+//		var FileSaver = require('file-saver');
+		var xhr = new XMLHttpRequest();
+		xhr.open(method, fileURL);
+		xhr.responseType = 'blob';
+		xhr.onload = function() {
+		  FileSaver.saveAs(xhr.response, fileName);
+		};
+		xhr.send();
+	}
+</script>
+</head>
+<body onLoad='download_file("https://c.veocdn.com/1d00067e-3f17-40e2-99d0-5134a341c3ce/standard/machine/1b5e6f93/video.mp4","video.mp4")'>
+<!--			
+	https://c.veocdn.com/e885f49a-62d2-4ed3-a289-0eedd192239d/standard/machine/1f1d9504/video.mp4
+	https://c.veocdn.com/db7bdb2d-f697-4008-b2e5-7809ada827b4/standard/machine/1a706ac6/video.mp4
+	https://c.veocdn.com/08ca7316-de43-41a2-8565-d31eeaa169e6/standard/machine/19a3e58f/video.mp4
+-->
+</ul>
+</body>	
+</html>
