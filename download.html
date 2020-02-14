@@ -6,7 +6,7 @@
 		alert("download_file");
 //		var FileSaver = require('file-saver');
 		var xhr = new XMLHttpRequest();
-		xhr.open(method, fileURL);
+		xhr.open("GET", fileURL);
 		xhr.responseType = 'blob';
 		xhr.onload = function() {
 		  FileSaver.saveAs(xhr.response, fileName);
