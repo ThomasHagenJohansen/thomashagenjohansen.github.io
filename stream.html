@@ -1,39 +1,40 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html>
   <head>
-    <meta charset="utf-8">
-    <title>Piping a fetch response to StreamSaver</title>
+    <title>Hls.js demo - basic usage</title>
   </head>
+
   <body>
-    <button id="$start">Start</button>
-    <script src="https://cdn.jsdelivr.net/npm/web-streams-polyfill@2.0.2/dist/ponyfill.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/streamsaver@2.0.3/StreamSaver.min.js"></script>
+    <script src="../dist/hls.js"></script>
+
+    <center>
+      <h1>Hls.js demo - basic usage</h1>
+      <video height="600" id="video" controls></video>
+    </center>
+
     <script>
-      $start.onclick = () => {
-        const url = 'https://c.veocdn.com/e8510517-79a1-4971-8582-aaeab94c0aec/standard/machine/a43f57a6/video.mp4'
-        const fileStream = streamSaver.createWriteStream('video.mp4')
-
-        fetch(url).then(res => {
-          const readableStream = res.body
-
-          // more optimized
-          if (window.WritableStream && readableStream.pipeTo) {
-            return readableStream.pipeTo(fileStream)
-              .then(() => console.log('done writing'))
-          }
-
-          window.writer = fileStream.getWriter()
-
-          const reader = res.body.getReader()
-          const pump = () => reader.read()
-            .then(res => res.done
-              ? writer.close()
-              : writer.write(res.value).then(pump))
-
-          pump()
-        })
+      var video = document.getElementById('video');
+      if (Hls.isSupported()) {
+        var hls = new Hls({
+          debug: true,
+        });
+        hls.loadSource('https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8');
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+          video.muted = true;
+          video.play();
+        });
+      }
+      // hls.js is not supported on platforms that do not have Media Source Extensions (MSE) enabled.
+      // When the browser has built-in HLS support (check using `canPlayType`), we can provide an HLS manifest (i.e. .m3u8 URL) directly to the video element throught the `src` property.
+      // This is using the built-in support of the plain video element, without using hls.js.
+      else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = 'https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8';
+        video.addEventListener('canplay', function () {
+          video.play();
+        });
       }
     </script>
-  </body>
+  <!-- injected in netlify post processing step -->
+</body>
 </html>
 
