@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Peepoo GBA version</title>
+  <style>
+    /* Fill the screen with the emulator */
+    html, body, #emulator {
+      margin: 0; padding: 0;
+      width: 100%; height: 100%;
+      overflow: hidden;
+      background: #000;
+    }
+  </style>
+</head>
+<body>
+  <div id="emulator"></div>
+  <script>
+	  EJS_player          = '#emulator';
+	  EJS_core            = 'gba';
+	  EJS_gameUrl         = 'https://thj.dk/gba/bin/peepoo.gba';
+	  EJS_pathtodata      = 'https://cdn.emulatorjs.org/latest/data/';
+	  EJS_color           = "#FF00AA";
+      EJS_backgroundBlur  = true;
+	  EJS_backgroundImage = "title.png";
+	  EJS_backgroundColor = "#000";
+	  EJS_Buttons = {
+	    exitEmulation: {
+	      visible: true,
+	      callback: () => {
+	        window.location.reload();
+  		    window.parent.postMessage({ type: 'game-unloaded-iframe' }, '*');
+	      }
+	    }
+	  };
+	  EJS_onGameStart = function(e) { window.parent.postMessage({ type: 'game-loaded-iframe' }, '*'); }
+  </script>
+  <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
+</body>
+</html>
+

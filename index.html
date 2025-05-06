@@ -1,1 +1,192 @@
-<html><body>thj.dk</body></html>
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <title>thj.dk</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      position: relative;
+    }
+
+    .header {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .fixed-subheader {
+      position: absolute;
+      top: 60px;
+      left: 16px;
+      font-size: 14px;
+      color: #666;
+      font-style: italic;
+      text-align: left;
+      display: inline-block;
+    }
+
+    .center-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .subheader {
+      font-size: 14px;
+      color: #444;
+      font-style: italic;
+      text-align: left;
+      width: 100%;
+      padding-left: 16px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), -1px -1px 2px rgba(255, 255, 255, 0.2);
+    }
+
+    .iframe-wrapper {
+      position: relative;
+      width: 512px;
+      height: 256px;
+      transition: width 0.3s ease, height 0.3s ease;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      background: white;
+      margin-top: 4px;
+    }
+
+    .iframe-wrapper.expanded {
+      width: 1024px;
+      height: 512px;
+    }
+
+    .iframe-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+      transition: filter 0.3s ease;
+    }
+
+    .iframe-wrapper:not(.expanded) iframe {
+      filter: blur(4px) brightness(0.7);
+      pointer-events: none;
+    }
+
+    .click-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .iframe-wrapper.expanded .click-overlay {
+      display: none;
+    }
+
+    .close-button {
+      display: none;
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: rgba(0, 0, 0, 0.6);
+      border: none;
+      border-radius: 4px;
+      padding: 6px;
+      cursor: pointer;
+      z-index: 20;
+      width: 32px;
+      height: 32px;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease;
+    }
+
+    .close-button:hover {
+      background: rgba(0, 0, 0, 0.8);
+    }
+
+    .iframe-wrapper.expanded .close-button {
+      display: flex;
+    }
+
+    .close-button svg {
+      width: 16px;
+      height: 16px;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">thj.dk</div><br/><br/>
+ <div class="fixed-subheader">Bits'n'bytes from back then...</div>
+    <div class="center-container">
+    <div class="subheader"><b>2005, Gameboy Advance Homebrew (ARM assembly)</b><br/>- Source code and notes will be shared at later time...</div>
+    <div class="iframe-wrapper" id="preview">
+      <div class="click-overlay" id="overlay"></div>
+      <button class="close-button" id="closeBtn" aria-label="Luk">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
+          <path d="M18 6L6 18M6 6l12 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <iframe src="/gba/peepoo/index.html"></iframe>
+    </div>
+  </div>
+ 
+<script>
+  window.addEventListener('message', (event) => {
+    const message = event.data;
+    if (message.type === 'game-loaded-iframe') {
+      closeBtn.style.display = 'none';
+    } else if (message.type === 'game-unloaded-iframe') {
+      handleCloseClick();
+    }
+  });
+
+  const wrapper = document.getElementById('preview');
+  const overlay = document.getElementById('overlay');
+  const closeBtn = document.getElementById('closeBtn');
+
+  function handleCloseClick() {
+    wrapper.classList.remove('expanded');
+    setTimeout(() => {
+      overlay.style.display = 'block';
+    }, 300);
+  }
+
+  overlay.addEventListener('click', () => {
+    wrapper.classList.add('expanded');
+  });
+
+  closeBtn.addEventListener('click', handleCloseClick);
+
+  const observer = new MutationObserver(() => {
+    if (wrapper.classList.contains('expanded')) {
+      overlay.style.display = 'none';
+    } else {
+      overlay.style.display = 'block';
+      const iframe = document.querySelector('iframe');
+      iframe.contentWindow.location.reload();
+    }
+  });
+
+  observer.observe(wrapper, { attributes: true, attributeFilter: ['class'] });
+</script>
+
+</body>
+</html>
