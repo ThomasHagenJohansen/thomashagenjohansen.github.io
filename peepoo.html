@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Peepoo</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #111;
+      color: white;
+      text-align: center;
+      padding: 2rem;
+    }
+    canvas {
+      border: 4px solid #888;
+      margin-top: 1rem;
+      image-rendering: pixelated;
+    }
+  </style>
+</head>
+<body>
+  <h1>Peepoo</h1>
+  <p>Dit spil starter automatisk nedenfor:</p>
+  <canvas id="screen" width="240" height="160"></canvas>
+
+  <!-- Stabil CDN-hostet version af gbajs -->
+  <script src="https://cdn.jsdelivr.net/npm/gbajs@1.0.4/gbajs.min.js"></script>
+  <script>
+    // Tjek at GameBoyAdvance-klassen er tilgængelig
+    if (typeof GameBoyAdvance === 'undefined') {
+      console.error("gba.js blev ikke indlæst korrekt.");
+    } else {
+      const gba = new GameBoyAdvance();
+      gba.setCanvas(document.getElementById("screen"));
+
+      // BIOS er normalt påkrævet for fuld funktionalitet, men vi bruger en tom her
+      gba.setBios(new Uint8Array(0x4000)); 
+
+      gba.loadRomFromUrl("https://thj.dk/gba/bin/peepoo.gba").then(() => {
+        gba.runStable();
+      }).catch((e) => {
+        console.error("Kunne ikke indlæse peepoo.gba:", e);
+      });
+    }
+  </script>
+</body>
+</html>
+
