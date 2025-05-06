@@ -151,6 +151,27 @@
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
+	
+	.click-to-play {
+		position: absolute;
+    	top: 50%;
+    	left: 50%;
+    	transform: translate(-50%, -50%);
+    	font-size: 20px;
+    	font-weight: bold;
+    	color: white;
+    	text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+    	background: transparent;
+    	pointer-events: none;
+    	z-index: 9;
+    	opacity: 1;
+    	transition: opacity 0.3s ease;
+    	text-align: center;
+	}
+
+  .iframe-wrapper.expanded .click-to-play {
+    opacity: 0;
+  }
     
     @media only screen and (max-width: 768px) {
       .subheader, 
@@ -165,7 +186,7 @@
       .mobile-message {
         display: flex;
       }
-    }
+  }
   </style>
 </head>
 <body>
@@ -175,6 +196,7 @@
     <div class="subheader"><b>2005, Gameboy Advance Homebrew (ARM assembly)</b><br/>- Source code and notes will be shared at later time...</div>
     <div class="iframe-wrapper" id="preview">
       <div class="click-overlay" id="overlay"></div>
+	  <div class="click-to-play">Click to play</div>
       <button class="close-button" id="closeBtn" aria-label="Luk">
         <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
           <path d="M18 6L6 18M6 6l12 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -192,9 +214,10 @@
   window.addEventListener('message', (event) => {
     const message = event.data;
     if (message.type === 'game-loaded-iframe') {
-      closeBtn.style.display = 'none';
+		closeBtn.style.display = 'none';
     } else if (message.type === 'game-unloaded-iframe') {
-	  location.href = location.href;
+		closeBtn.style.display = '';
+		wrapper.classList.remove('expanded');
     }
   });
 
@@ -210,7 +233,7 @@
   }
 
   overlay.addEventListener('click', () => {
-    wrapper.classList.add('expanded');
+	  wrapper.classList.add('expanded');
   });
 
   closeBtn.addEventListener('click', handleCloseClick);
