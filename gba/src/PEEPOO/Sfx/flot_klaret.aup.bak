@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<audacityproject projname="flot_klaret_data" version="1.1.0" audacityversion="1.2.3" sel0="0.0000000000" sel1="0.0000000000" vpos="0" h="0.0000000000" zoom="701.3631512071" rate="18157.000000" >
+	<tags title="" artist="" album="" track="-1" year="" genre="-1" comments="" id3v2="1" />
+	<wavetrack name="flot_klaret" channel="2" linked="0" offset="0.00000000" rate="18157.000000" gain="1.000000" pan="0.000000" >
+		<sequence maxsamples="524288" sampleformat="131073" numsamples="11805" >
+			<waveblock start="0" >
+				<simpleblockfile filename='b00254.au' len='11805' min='-0.117174' max='0.171893' rms='0.009101'/>
+			</waveblock>
+		</sequence>
+		<envelope numpoints='0'>
+		</envelope>
+	</wavetrack>
+</audacityproject>

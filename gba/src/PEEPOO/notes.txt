@@ -1,0 +1,12 @@
+ABOUT SPRITES IN MODE 3,4,5
+
+You need to put them at starting address 0x06014000 and the starting sprite number will be 512.
+You only have 512 sprites available in these modes.
+Sprites 0-511 are not available due to the memory that is consumed by the bitmap plane.
+BG Mode is 3~5 (Bitmap Mode)
+OBJ character data RAM is halved to 16 KB, so character name numbers
+0-511 are disabled and numbers 512 and greater are used.
+
+
+
+

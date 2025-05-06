@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<audacityproject projname="flot_klaret_data" version="1.1.0" audacityversion="1.2.3" sel0="0.3250793651" sel1="0.9520181406" vpos="0" h="0.0000000000" zoom="86.1328125000" rate="18157.000000" >
+	<tags title="" artist="" album="" track="-1" year="" genre="-1" comments="" id3v2="1" />
+	<wavetrack name="Lydspor" channel="2" linked="0" offset="0.00000000" rate="18157.000000" gain="1.000000" pan="0.000000" >
+		<sequence maxsamples="524288" sampleformat="131073" numsamples="25088" >
+			<waveblock start="0" >
+				<simpleblockfile filename='b00000.au' len='25088' min='-0.163745' max='0.269062' rms='0.013651'/>
+			</waveblock>
+		</sequence>
+		<envelope numpoints='0'>
+		</envelope>
+	</wavetrack>
+</audacityproject>
