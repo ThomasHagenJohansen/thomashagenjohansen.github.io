@@ -173,6 +173,33 @@
     opacity: 0;
   }
     
+  .image-overlay-container {
+    position: relative;
+    display: inline-block;
+    max-width: 200px;
+  }
+
+  .image-overlay-container img {
+    width: 100%;
+    display: block;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .overlay-text {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 6px 10px;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 4px;
+  }	
+	
     @media only screen and (max-width: 768px) {
       .subheader, 
       .iframe-wrapper {
@@ -204,10 +231,16 @@
       </button>
       <iframe src="/gba/peepoo/index.html"></iframe>
     </div>
-    <div class="mobile-message">
-      <img src="gba/peepoo/title.png" alt="Gameboy Advance screenshot" />
-	  <sub style="font-size: 10px; color: #666;"><b>2005, Gameboy Advance Homebrew (ARM assembly)</b><br/>- Source code and notes will be shared at later time...</sub>
-    </div>
+<div class="mobile-message">
+  <div class="image-overlay-container">
+    <img src="gba/peepoo/title.png" alt="Gameboy Advance screenshot" />
+    <div class="overlay-text">Playable on a larger screen</div>
+  </div>
+  <sub style="font-size: 10px; color: #666; margin-top: 12px; display: block;">
+    <b>2005, Gameboy Advance Homebrew (ARM assembly)</b><br/>
+    - Source code and notes will be shared at later time...
+  </sub>
+</div>
   </div>
  
 <script>
