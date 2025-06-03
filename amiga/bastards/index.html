@@ -1,0 +1,211 @@
+<html>
+<head>
+<script> 
+/*------------------------------------------------------------------------------ 
+Copyright (c) 2011 Antoine Santo Aka NoNameNo
+
+This File is part of the CODEF project.
+
+More info : http://codef.santo.fr
+Demo gallery http://www.wab.com
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+------------------------------------------------------------------------------*/
+</script>
+<script src="codef/codef_core.js"></script> 
+<script src="screens/379/codef_3.1amigadecrunch.js"></script> 
+<script src="codef/pt.js"></script>
+
+<script> 
+var basepath = "screens/379/";
+
+var main = new image(basepath + 'main.png');
+var tiles = new image(basepath + 'tiles.png');
+var font = new image(basepath + 'font.png');
+
+var mycanvas;
+var textboxcanvas;
+var textcanvas;
+
+var ixy = 0;
+var textline = [];
+var whichtextline = 0;
+
+textline[0]="                    ";
+textline[1]="     WELCOME TO     ";
+textline[2]="  ANOTHER BASTARDS  ";
+textline[3]="     PRODUCTION     ";
+textline[4]="     THIS  TIME     ";
+textline[5]="     A BBS INTRO    ";
+textline[6]="      CODING BY     ";
+textline[7]="        TAZY        ";
+textline[8]="     GRAPHICS BY    ";
+textline[9]="      JAGGERBOY     ";
+textline[10]="ORGANIZED BY BITMAN ";
+textline[11]="    MUSIC BY NICK   ";
+textline[12]="   PLEASE CALL MID  ";
+textline[13]="    AT THE NUMBER   ";
+textline[14]="   GREETS TO THESE  ";
+textline[15]="    GUYS THAT WE    ";
+textline[16]="     REMEMBERED     ";
+textline[17]="   AGNOSTIC FRONT   ";
+textline[18]="       PANIC        ";
+textline[19]="       AMAZE        ";
+textline[20]="        BASS        ";
+textline[21]="      COMPLEX       ";
+textline[22]="     BRAINSTORM     ";
+textline[23]="      ANARCHY       ";
+textline[24]="      ARTEMIS       ";
+textline[25]="     ANDROMEDA      ";
+textline[26]="      ADDONIC       ";
+textline[27]="       AURORA       ";
+textline[28]="        AXIS        ";
+textline[29]="      BALANCE       ";
+textline[30]="       CYTAX        ";
+textline[31]="      DELIGHT       ";
+textline[32]="       DEVILS       ";
+textline[33]="        IBB         ";
+textline[34]="      KEFRENS       ";
+textline[35]="       MIRAGE       ";
+textline[36]="       MAJIC        ";
+textline[37]="        PMC         ";
+textline[38]="       PALACE       ";
+textline[39]="       NOXIOUS      ";
+textline[40]="       PRECISE      ";
+textline[41]="         LDC        ";
+textline[42]="        RAZOR       ";
+textline[43]="         LSD        ";
+textline[44]="       SANITY       ";
+textline[45]="       REBELS       ";
+textline[46]="      SCOOPEX       ";
+textline[47]="       VISION       ";
+textline[48]="      SERIOUS       ";
+textline[49]="        VEGA        ";
+textline[50]="      SILENTS       ";
+textline[51]="        TRSI        ";
+textline[52]="      SUPPLEX       ";
+textline[53]="       VECTRA       ";
+textline[54]="        TSB         ";
+textline[55]="       TRIAD        ";
+textline[56]="      UPFRONT       ";
+textline[57]="       ZENITH       ";
+textline[58]="    VERTIGO AND     ";
+textline[59]="       WIZZCAT      ";
+textline[60]="    SORRY TO ALL    ";
+textline[61]="   WE HAVE FORGOT  ";
+textline[62]="    BYE FOR NOW     ";
+textline[63]="      OLD CHAPS     ";
+textline[64]="                    ";
+textline[65]="    CODEF REMAKE  ";
+textline[66]="   BY MELLOW MAN    ";
+textline[67]="                    ";
+textline[68]="                    ";
+
+var lasttextline = 68;
+var textsize = 4;
+var textsizeinc = -0.04;
+var maxtextsize = 4;
+var texttimer = 0;
+
+var fontW = 34;
+var fontH = 70;
+var fontO = 32;
+
+function init() {
+    mycanvas = new canvas(720, 568, "main");
+    textboxcanvas = new canvas(640, 96);
+    textcanvas = new canvas(640, 96);
+    textcanvas.setmidhandle();
+    tiles.setmidhandle();
+    font.initTile(fontW, fontH, fontO);
+
+    mycanvas.contex.imageSmoothingEnabled = false;
+    textcanvas.contex.imageSmoothingEnabled = false;
+    textboxcanvas.contex.imageSmoothingEnabled = false;
+
+    myAmigaDecrunch = new AmigaDecrunch(4, 10, 150, 350);
+    do_decruncher();
+}
+
+function do_decruncher() {
+    if (myAmigaDecrunch.finished == 1) {
+        go();
+    } else {
+        myAmigaDecrunch.doDecrunch(mycanvas);
+        requestAnimFrame(do_decruncher);
+    }
+}
+
+function go() {
+    mycanvas.fill('#000000');
+    textboxcanvas.clear();
+    textcanvas.clear();
+
+    main.draw(mycanvas, 0, 0);
+
+    ixy += 0.008;
+    tiles.draw(textboxcanvas, 720/2 + (720/4 * Math.cos(ixy*4 - Math.cos(ixy-0.1))), 
+                          568/4 + (568/4.7 * -Math.sin(ixy*2.3 - Math.cos(ixy-0.1))));
+    font.print(textcanvas, textline[whichtextline], 0, 13);
+    
+    texttimer--;
+    if (texttimer <= 0) {
+        if (textsize >= maxtextsize) {
+            textsizeinc = -0.04;
+            whichtextline++;
+            if (whichtextline > lasttextline) whichtextline = 0;
+        }
+        textsize += textsizeinc;
+        if (textsize <= 1) {
+            textsize = 1;
+            textsizeinc = 0.04;
+            texttimer = 300;
+        }
+    }
+
+    textcanvas.draw(textboxcanvas, 320, 48, 1, 0, textsize, 1);
+    textboxcanvas.draw(mycanvas, 58, 288);
+    requestAnimFrame(go);
+}
+</script>
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Helvetica;
+    background-color: #333;
+}
+canvas {
+    image-rendering: optimizeSpeed;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: -o-crisp-edges;
+    image-rendering: pixelated;
+    -ms-interpolation-mode: nearest-neighbor;
+}
+</style>
+</head>
+
+<body onload="init();">
+<center>
+<div id="main"></div>
+</center>
+</body>
+</html>
