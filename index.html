@@ -106,12 +106,13 @@
       width: 100%; height: 100%;
       background: url('/amiga/bastards/title.png') center center / cover no-repeat;
       z-index: 1;
+      filter: blur(4px) brightness(0.7);
     }
 
     .iframe-wrapper[data-id="amiga"].expanded::before {
       display: none;
     }
-  
+
     .iframe-wrapper[data-id="amiga"] .click-to-play {
       top: 48%;
     }
@@ -205,6 +206,15 @@
       text-align: center;
       padding: 20px;
       max-width: 80%;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), -1px -1px 2px rgba(255, 255, 255, 0.2);
+    }
+
+    .mobile-message img {
+      width: 90%;
+      max-width: 400px;
+      margin: 20px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
 
     @media only screen and (max-width: 768px) {
@@ -221,8 +231,12 @@
 <body>
   <div class="header">thj.dk</div>
   <div class="fixed-subheader">Bits'n'bytes from back then...</div>
+
   <div class="mobile-message">
-    Use a larger screen to view this.
+    <b>Use a larger screen to view this.</b>
+    <br/>
+    <img src="/gba/peepoo/title.png" alt="GBA Title">
+    <img src="/amiga/bastards/title.png" alt="Amiga Title">
   </div>
 
   <!-- GBA Section -->
