@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="da">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>thj.dk</title>
   <style>
     body {
@@ -13,7 +13,8 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      flex-direction: column;
+      min-height: 100vh;
       text-align: center;
       position: relative;
     }
@@ -37,39 +38,52 @@
       display: inline-block;
     }
 
-    .center-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
 
     .subheader {
       font-size: 14px;
       color: #444;
       font-style: italic;
-      text-align: left;
+      text-align: center;
       width: 100%;
-      padding-left: 16px;
+      margin-top: 40px;
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), -1px -1px 2px rgba(255, 255, 255, 0.2);
+    }
+
+    .subheader a {
+      color: inherit;
+      text-decoration: none;
     }
 
     .iframe-wrapper {
       position: relative;
-      width: 512px;
-      height: 256px;
-      transition: width 0.3s ease, height 0.3s ease;
       border: 1px solid #ccc;
       border-radius: 8px;
       overflow: hidden;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      background: white;
-      margin-top: 4px;
+      background: #000;
+      margin: 8px 0;
+      transition: width 0.3s ease, height 0.3s ease;
     }
 
-    .iframe-wrapper.expanded {
+    .iframe-wrapper[data-id="gba"] {
+      width: 512px;
+      height: 256px;
+    }
+
+    .iframe-wrapper.expanded[data-id="gba"] {
       width: 1024px;
       height: 512px;
+    }
+
+    .iframe-wrapper[data-id="amiga"] {
+      width: 320px;
+      height: 256px;
+      background: black;
+    }
+
+    .iframe-wrapper.expanded[data-id="amiga"] {
+      width: 800px;
+      height: 580px;
     }
 
     .iframe-wrapper iframe {
@@ -78,6 +92,7 @@
       border: none;
       display: block;
       transition: filter 0.3s ease;
+      background: black;
     }
 
     .iframe-wrapper:not(.expanded) iframe {
@@ -85,12 +100,28 @@
       pointer-events: none;
     }
 
+    /* Placeholder image for Amiga */
+    .iframe-wrapper[data-id="amiga"]:not(.expanded)::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: url('/amiga/bastards/title.png') center center / cover no-repeat;
+      z-index: 1;
+    }
+
+    .iframe-wrapper[data-id="amiga"].expanded::before {
+      display: none;
+    }
+	
+	.iframe-wrapper[data-id="amiga"] .click-to-play {
+	  top: 48%;
+	}
+
     .click-overlay {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       z-index: 10;
       background: transparent;
       cursor: pointer;
@@ -98,6 +129,27 @@
 
     .iframe-wrapper.expanded .click-overlay {
       display: none;
+    }
+
+    .click-to-play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 20px;
+      font-weight: bold;
+      color: white;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+      background: transparent;
+      pointer-events: none;
+      z-index: 9;
+      opacity: 1;
+      transition: opacity 0.3s ease;
+      text-align: center;
+    }
+
+    .iframe-wrapper.expanded .click-to-play {
+      opacity: 0;
     }
 
     .close-button {
@@ -131,158 +183,108 @@
       height: 16px;
       pointer-events: none;
     }
-    
-    .mobile-message {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      margin-bottom: 300px;
-    }
-    
-    .mobile-message p {
-      font-size: 16px;
-      color: #666;
-      margin-bottom: 20px;
-    }
-    
-    .mobile-message img {
-      max-width: 200px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
 	
-	.click-to-play {
-		position: absolute;
-    	top: 50%;
-    	left: 50%;
-    	transform: translate(-50%, -50%);
-    	font-size: 20px;
-    	font-weight: bold;
-    	color: white;
-    	text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
-    	background: transparent;
-    	pointer-events: none;
-    	z-index: 9;
-    	opacity: 1;
-    	transition: opacity 0.3s ease;
-    	text-align: center;
+	.subheader a {
+	  display: inline-block;
+	  margin: 8px auto;
+	  padding: 8px 16px;
+	  background-color: #007acc;
+	  color: #fff;
+	  text-decoration: none;
+	  font-weight: bold;
+	  border-radius: 4px;
+	  transition: background 0.3s ease;
 	}
 
-  .iframe-wrapper.expanded .click-to-play {
-    opacity: 0;
-  }
-    
-  .image-overlay-container {
-    position: relative;
-    display: inline-block;
-    max-width: 200px;
-  }
-
-  .image-overlay-container img {
-    width: 100%;
-    display: block;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-
-  .overlay-text {
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    right: 8px;
-    background: rgba(0, 0, 0, 0.6);
-    color: white;
-    padding: 6px 10px;
-    font-size: 12px;
-    font-weight: bold;
-    text-align: center;
-    border-radius: 4px;
-  }	
+	.subheader a:hover {
+	  background-color: #005fa3;
+	}
 	
+	.mobile-message {
+	  display: none;
+	  font-size: 16px;
+	  color: #444;
+	  text-align: center;
+	  padding: 20px;
+	  max-width: 80%;
+	}
+
     @media only screen and (max-width: 768px) {
-      .subheader, 
+      .subheader,
       .iframe-wrapper {
         display: none !important;
       }
-      
-      .center-container {
-        margin-top: 100px;
-      }
-      
-      .mobile-message {
-        display: flex;
-      }
-  }
+	  .mobile-message {
+	    display: block;
+	  }
+    }
   </style>
 </head>
 <body>
-  <div class="header">thj.dk</div><br/><br/>
- <div class="fixed-subheader">Bits'n'bytes from back then...</div>
-    <div class="center-container">
-    <div class="subheader"><b>2005, Gameboy Advance Homebrew (ARM assembly)</b><br/>- Source code and notes will be shared at later time...</div>
-    <div class="iframe-wrapper" id="preview">
-      <div class="click-overlay" id="overlay"></div>
-	  <div class="click-to-play">Click to play</div>
-      <button class="close-button" id="closeBtn" aria-label="Luk">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
-          <path d="M18 6L6 18M6 6l12 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      <iframe src="/gba/peepoo/index.html"></iframe>
-    </div>
-<div class="mobile-message">
-  <div class="image-overlay-container">
-    <img src="gba/peepoo/title.png" alt="Gameboy Advance screenshot" />
-    <div class="overlay-text">Playable on a larger screen</div>
+  <div class="header">thj.dk</div>
+  <div class="fixed-subheader">Bits'n'bytes from back then...</div>
+  <div class="mobile-message">
+	  Use a larger screen to view this.
   </div>
-  <sub style="font-size: 10px; color: #666; margin-top: 12px; display: block;">
+
+  <!-- GBA Section -->
+  <div class="subheader">
     <b>2005, Gameboy Advance Homebrew (ARM assembly)</b><br/>
     - Source code and notes will be shared at later time...
-  </sub>
-</div>
   </div>
- 
-<script>
-  window.addEventListener('message', (event) => {
-    const message = event.data;
-    if (message.type === 'game-loaded-iframe') {
-		closeBtn.style.display = 'none';
-    } else if (message.type === 'game-unloaded-iframe') {
-		closeBtn.style.display = '';
-		wrapper.classList.remove('expanded');
-    }
-  });
+  <div class="iframe-wrapper" data-id="gba">
+    <div class="click-overlay"></div>
+    <div class="click-to-play">Click to play</div>
+    <button class="close-button" aria-label="Luk">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
+        <path d="M18 6L6 18M6 6l12 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <iframe src="/gba/peepoo/index.html"></iframe>
+  </div>
 
-  const wrapper = document.getElementById('preview');
-  const overlay = document.getElementById('overlay');
-  const closeBtn = document.getElementById('closeBtn');
+  <!-- Amiga Section -->
+  <div class="subheader">
+    <b><a href="https://demozoo.org/productions/196108/" target="_blank" rel="noopener noreferrer">1992, Commodore Amiga (68000 assembly)</a></b><br/>
+    - Horizontal zoom using blitter and horizontal sprite multiplexing.
+  </div>
+  <div class="iframe-wrapper" data-id="amiga">
+    <div class="click-overlay"></div>
+    <div class="click-to-play">Click to view</div>
+    <button class="close-button" aria-label="Luk">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
+        <path d="M18 6L6 18M6 6l12 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <iframe data-src="/amiga/bastards/index.html"></iframe>
+  </div>
 
-  function handleCloseClick() {
-    wrapper.classList.remove('expanded');
-    setTimeout(() => {
-      overlay.style.display = 'block';
-    }, 300);
-  }
+  <script>
+    document.querySelectorAll('.iframe-wrapper').forEach(wrapper => {
+      const overlay = wrapper.querySelector('.click-overlay');
+      const closeBtn = wrapper.querySelector('.close-button');
+      const iframe = wrapper.querySelector('iframe');
 
-  overlay.addEventListener('click', () => {
-	  wrapper.classList.add('expanded');
-  });
+      overlay.addEventListener('click', () => {
+        if (iframe.hasAttribute('data-src') && !iframe.src) {
+          iframe.src = iframe.dataset.src;
+        }
+        wrapper.classList.add('expanded');
+        overlay.style.display = 'none';
+      });
 
-  closeBtn.addEventListener('click', handleCloseClick);
-
-  const observer = new MutationObserver(() => {
-    if (wrapper.classList.contains('expanded')) {
-      overlay.style.display = 'none';
-    } else {
-      overlay.style.display = 'block';
-      const iframe = document.querySelector('iframe');
-      iframe.contentWindow.location.reload();
-    }
-  });
-
-  observer.observe(wrapper, { attributes: true, attributeFilter: ['class'] });
-</script>
-
+      closeBtn.addEventListener('click', () => {
+        wrapper.classList.remove('expanded');
+        setTimeout(() => {
+          overlay.style.display = 'block';
+          if (iframe.hasAttribute('data-src')) {
+            iframe.src = ''; // stop Amiga script
+          } else {
+            iframe.contentWindow.location.reload();
+          }
+        }, 300);
+      });
+    });
+  </script>
 </body>
 </html>
