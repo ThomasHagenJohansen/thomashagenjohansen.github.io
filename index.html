@@ -38,7 +38,6 @@
       display: inline-block;
     }
 
-
     .subheader {
       font-size: 14px;
       color: #444;
@@ -100,7 +99,6 @@
       pointer-events: none;
     }
 
-    /* Placeholder image for Amiga */
     .iframe-wrapper[data-id="amiga"]:not(.expanded)::before {
       content: "";
       position: absolute;
@@ -113,10 +111,10 @@
     .iframe-wrapper[data-id="amiga"].expanded::before {
       display: none;
     }
-	
-	.iframe-wrapper[data-id="amiga"] .click-to-play {
-	  top: 48%;
-	}
+  
+    .iframe-wrapper[data-id="amiga"] .click-to-play {
+      top: 48%;
+    }
 
     .click-overlay {
       position: absolute;
@@ -183,40 +181,40 @@
       height: 16px;
       pointer-events: none;
     }
-	
-	.subheader a {
-	  display: inline-block;
-	  margin: 8px auto;
-	  padding: 8px 16px;
-	  background-color: #007acc;
-	  color: #fff;
-	  text-decoration: none;
-	  font-weight: bold;
-	  border-radius: 4px;
-	  transition: background 0.3s ease;
-	}
 
-	.subheader a:hover {
-	  background-color: #005fa3;
-	}
-	
-	.mobile-message {
-	  display: none;
-	  font-size: 16px;
-	  color: #444;
-	  text-align: center;
-	  padding: 20px;
-	  max-width: 80%;
-	}
+    .subheader a {
+      display: inline-block;
+      margin: 8px auto;
+      padding: 8px 16px;
+      background-color: #007acc;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 4px;
+      transition: background 0.3s ease;
+    }
+
+    .subheader a:hover {
+      background-color: #005fa3;
+    }
+
+    .mobile-message {
+      display: none;
+      font-size: 16px;
+      color: #444;
+      text-align: center;
+      padding: 20px;
+      max-width: 80%;
+    }
 
     @media only screen and (max-width: 768px) {
       .subheader,
       .iframe-wrapper {
         display: none !important;
       }
-	  .mobile-message {
-	    display: block;
-	  }
+      .mobile-message {
+        display: block;
+      }
     }
   </style>
 </head>
@@ -224,7 +222,7 @@
   <div class="header">thj.dk</div>
   <div class="fixed-subheader">Bits'n'bytes from back then...</div>
   <div class="mobile-message">
-	  Use a larger screen to view this.
+    Use a larger screen to view this.
   </div>
 
   <!-- GBA Section -->
@@ -256,7 +254,7 @@
         <path d="M18 6L6 18M6 6l12 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </button>
-    <iframe data-src="/amiga/bastards/index.html"></iframe>
+    <iframe data-src="/amiga/bastards/index.html" src=""></iframe>
   </div>
 
   <script>
@@ -266,8 +264,8 @@
       const iframe = wrapper.querySelector('iframe');
 
       overlay.addEventListener('click', () => {
-        if (iframe.hasAttribute('data-src') && !iframe.src) {
-          iframe.src = iframe.dataset.src;
+        if (iframe.hasAttribute('data-src') && iframe.getAttribute('src') === '') {
+          iframe.setAttribute('src', iframe.dataset.src);
         }
         wrapper.classList.add('expanded');
         overlay.style.display = 'none';
@@ -278,7 +276,7 @@
         setTimeout(() => {
           overlay.style.display = 'block';
           if (iframe.hasAttribute('data-src')) {
-            iframe.src = ''; // stop Amiga script
+            iframe.setAttribute('src', '');
           } else {
             iframe.contentWindow.location.reload();
           }
