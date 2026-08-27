@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kasino — the classic card game</title>
+  <meta name="description" content="Kasino is the classic card game — play solo against the computer or online with friends. Free on the web, and on iPhone, iPad and Apple TV.">
+  <meta property="og:title" content="Kasino — the classic card game">
+  <meta property="og:description" content="Play solo against the computer or online with friends. Free on the web.">
+  <meta property="og:image" content="https://thj.dk/kasino/icon.png">
+  <meta property="og:url" content="https://thj.dk/kasino">
+  <link rel="icon" href="https://kasino.funective.com/favicon-32.png">
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; color: #eaf3ee;
+      font: 17px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(120% 90% at 50% 0%, #1c6b4a 0%, #0b3d2e 55%, #072a20 100%);
+      min-height: 100vh;
+    }
+    a { color: #7fd8ff; }
+    .wrap { max-width: 60rem; margin: 0 auto; padding: 3rem 1.25rem 4rem; }
+
+    header { text-align: center; }
+    .icon {
+      width: 132px; height: 132px; border-radius: 28px; display: block; margin: 0 auto 1rem;
+      box-shadow: 0 12px 40px rgba(0,0,0,.45);
+    }
+    h1 { font-size: clamp(2.6rem, 8vw, 4rem); margin: .2rem 0 0; letter-spacing: .5px; }
+    .tagline { color: #cfe8db; font-size: clamp(1.05rem, 3.5vw, 1.35rem); margin: .5rem 0 1.75rem; }
+
+    .cta { display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-block; padding: .8rem 1.4rem; border-radius: 999px; font-weight: 700;
+      text-decoration: none; border: 1px solid rgba(255,255,255,.18);
+    }
+    .btn.primary { background: #ffd24a; color: #0b3d2e; border-color: #ffd24a; }
+    .btn.ghost { background: rgba(255,255,255,.06); color: #eaf3ee; }
+
+    .shots {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+      margin: 3rem 0; align-items: start;
+    }
+    .shots img { width: 100%; border-radius: 18px; box-shadow: 0 10px 30px rgba(0,0,0,.4); }
+    @media (max-width: 640px) { .shots { grid-template-columns: repeat(2, 1fr); } }
+
+    h2 { color: #ffd24a; font-size: 1.5rem; text-align: center; margin: 2.5rem 0 1rem; }
+    .features { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem 2rem; }
+    @media (max-width: 640px) { .features { grid-template-columns: 1fr; } }
+    .feature h3 { margin: 0 0 .2rem; font-size: 1.1rem; }
+    .feature p { margin: 0; color: #cfe8db; }
+
+    .how { background: rgba(0,0,0,.18); border: 1px solid rgba(255,255,255,.08); border-radius: 18px; padding: 1.25rem 1.5rem; margin-top: 1rem; }
+    .how li { margin: .35rem 0; }
+    .how b { color: #ffd24a; }
+
+    footer { text-align: center; color: #9fc7b6; margin-top: 3.5rem; font-size: .95rem; }
+    footer a { color: #9fc7b6; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <img class="icon" src="icon.png" alt="Kasino app icon">
+      <h1>Kasino</h1>
+      <p class="tagline">The classic card game — play solo against the computer, or online with friends.</p>
+      <div class="cta">
+        <a class="btn primary" href="https://apps.apple.com/app/id6748325709">Download on the App Store</a>
+        <a class="btn ghost" href="https://kasino.funective.com">Play free in your browser</a>
+      </div>
+    </header>
+
+    <div class="shots">
+      <img src="shot1.png" alt="Kasino gameplay screenshot" loading="lazy">
+      <img src="shot2.png" alt="Kasino gameplay screenshot" loading="lazy">
+      <img src="shot3.png" alt="Kasino gameplay screenshot" loading="lazy">
+    </div>
+
+    <h2>Why you'll like it</h2>
+    <div class="features">
+      <div class="feature"><h3>Play anytime, solo</h3><p>Take on the computer in a quick round — no waiting for anyone.</p></div>
+      <div class="feature"><h3>Online with friends</h3><p>2–4 players, including 2‑vs‑2 teams. Share a room code and play.</p></div>
+      <div class="feature"><h3>Cross‑platform</h3><p>iPhone, iPad and Apple TV — and free in any browser.</p></div>
+      <div class="feature"><h3>Easy to learn</h3><p>Built‑in rules and a guided walkthrough get you playing in minutes.</p></div>
+      <div class="feature"><h3>Pick up where you left off</h3><p>Switch apps and your game is waiting when you come back.</p></div>
+      <div class="feature"><h3>Calm, handsome table</h3><p>Clean visuals and a felt table that feels like the real thing.</p></div>
+    </div>
+
+    <h2>How to play</h2>
+    <div class="how">
+      <p>Each turn you play one card from your hand:</p>
+      <ul>
+        <li><b>TAKE</b> — capture table cards that match your card's value or add up to it.</li>
+        <li><b>BUILD</b> — set up a value you can capture on a later turn.</li>
+        <li><b>TRAIL</b> — lay a card down when you can't take.</li>
+      </ul>
+      <p>Score for most cards, most spades, sweeps, aces, the last trick, and the two
+        Kasinos — the 2 of spades and the 10 of diamonds. Most points wins.</p>
+    </div>
+
+    <footer>
+      <p>Made by <a href="https://thj.dk">thj.dk</a> ·
+         <a href="https://kasino.funective.com/privacy.html">Privacy</a> ·
+         <a href="https://kasino.funective.com/support">Support</a> ·
+         <a href="mailto:thj@thj.dk">thj@thj.dk</a></p>
+    </footer>
+  </div>
+</body>
+</html>
